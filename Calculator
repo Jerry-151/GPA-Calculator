@@ -1,0 +1,155 @@
+#include <iostream>
+#include <cctype>
+#include <string>
+#include <fstream>
+#include <bits/stdc++.h>
+using namespace std;
+
+class Student{
+public:
+    int i, numClass, uid;
+    double totalPointU, totalPointW, ugpa, wgpa, creditSum;
+    string name;
+    void calculate();
+};
+
+void Student::calculate(){
+    set:
+    cout << "Enter the number of classes being accounted for: ";
+    cin >> numClass;
+    if(numClass <= 8 && numClass > 0){
+        goto next1;}
+    else {cout << "No more than 8, No less than 1!!!"; goto set;}
+
+    next1:
+    string className[numClass];
+    string classLevel[numClass];
+    int classCredit[numClass];
+    float classGrade[numClass];
+    char classRank[numClass];
+
+    for(i = 0; i < numClass; i++){
+        cout << "\n---------------------------------------------------\n\n";
+        cout << "Enter the name of class #" << i + 1 << ": ";
+        cin >> className[i];
+
+        rankReset:
+        cout << "Is " << className[i] << " a Regular(R), Honors(H), or Advanced(A) course: ";
+        cin >> classRank[i];
+        classRank[i] = toupper(classRank[i]);
+
+        if(classRank[i] == 'R' || classRank[i] == 'H' || classRank[i] == 'A'){
+            goto next2;}
+        else {cout << "Must input (R), (H), or (A)!!\n"; goto rankReset;}
+
+        next2:
+        cout << "Enter the credit hours for " << className[i] << ": ";
+        cin >> classCredit[i];
+
+        if(cin.fail()){
+            cout << "Please enter a number!!" << endl; cin.clear(); cin.ignore(); goto next2;}
+
+        cout << "Enter the grade you have for " << className[i] << " (In Percentage): ";
+        cin >> classGrade[i];}
+        
+    for (i = 0; i < numClass; ++i){
+        creditSum += classCredit[i];}
+
+    for(i = 0; i < numClass; i++){
+        if(classGrade[i] <= 59) {totalPointU += 0 * classCredit[i];}
+        else if(classGrade[i] <= 65) {totalPointU += 1   * classCredit[i];}
+        else if(classGrade[i] <= 69) {totalPointU += 1.3 * classCredit[i];}
+        else if(classGrade[i] <= 73) {totalPointU += 1.7 * classCredit[i];}
+        else if(classGrade[i] <= 75) {totalPointU += 2   * classCredit[i];}
+        else if(classGrade[i] <= 79) {totalPointU += 2.3 * classCredit[i];}
+        else if(classGrade[i] <= 83) {totalPointU += 2.7 * classCredit[i];}
+        else if(classGrade[i] <= 85) {totalPointU += 3   * classCredit[i];}
+        else if(classGrade[i] <= 89) {totalPointU += 3.3 * classCredit[i];}
+        else if(classGrade[i] <= 93) {totalPointU += 3.7 * classCredit[i];}
+        else if(classGrade[i] <=100) {totalPointU += 4   * classCredit[i];}}
+
+    for(i = 0; i < numClass; i++){
+        if(classGrade[i] <= 59) {totalPointW += 0 * classCredit[i];}
+        else if(classGrade[i] <= 65 && classRank[i] == 'R') {totalPointW += 1   * classCredit[i];}
+        else if(classGrade[i] <= 65 && classRank[i] == 'H') {totalPointW += 1.5 * classCredit[i];}
+        else if(classGrade[i] <= 65 && classRank[i] == 'A') {totalPointW += 2   * classCredit[i];}
+        else if(classGrade[i] <= 69 && classRank[i] == 'R') {totalPointW += 1.3 * classCredit[i];}
+        else if(classGrade[i] <= 69 && classRank[i] == 'H') {totalPointW += 1.7 * classCredit[i];}
+        else if(classGrade[i] <= 69 && classRank[i] == 'A') {totalPointW += 2.3 * classCredit[i];}
+        else if(classGrade[i] <= 73 && classRank[i] == 'R') {totalPointW += 1.7 * classCredit[i];}
+        else if(classGrade[i] <= 73 && classRank[i] == 'H') {totalPointW += 2.1 * classCredit[i];}
+        else if(classGrade[i] <= 73 && classRank[i] == 'A') {totalPointW += 2.7 * classCredit[i];}
+        else if(classGrade[i] <= 75 && classRank[i] == 'R') {totalPointW += 2   * classCredit[i];}
+        else if(classGrade[i] <= 75 && classRank[i] == 'H') {totalPointW += 2.5 * classCredit[i];}
+        else if(classGrade[i] <= 75 && classRank[i] == 'A') {totalPointW += 3   * classCredit[i];}
+        else if(classGrade[i] <= 79 && classRank[i] == 'R') {totalPointW += 2.3 * classCredit[i];}
+        else if(classGrade[i] <= 79 && classRank[i] == 'H') {totalPointW += 2.7 * classCredit[i];}
+        else if(classGrade[i] <= 79 && classRank[i] == 'A') {totalPointW += 3.3 * classCredit[i];}
+        else if(classGrade[i] <= 83 && classRank[i] == 'R') {totalPointW += 2.7 * classCredit[i];}
+        else if(classGrade[i] <= 83 && classRank[i] == 'H') {totalPointW += 3.1 * classCredit[i];}
+        else if(classGrade[i] <= 83 && classRank[i] == 'A') {totalPointW += 3.7 * classCredit[i];}
+        else if(classGrade[i] <= 85 && classRank[i] == 'R') {totalPointW += 3   * classCredit[i];}
+        else if(classGrade[i] <= 85 && classRank[i] == 'H') {totalPointW += 3.5 * classCredit[i];}
+        else if(classGrade[i] <= 85 && classRank[i] == 'A') {totalPointW += 4   * classCredit[i];}
+        else if(classGrade[i] <= 89 && classRank[i] == 'R') {totalPointW += 3.3 * classCredit[i];}
+        else if(classGrade[i] <= 89 && classRank[i] == 'H') {totalPointW += 3.7 * classCredit[i];}
+        else if(classGrade[i] <= 89 && classRank[i] == 'A') {totalPointW += 4.3 * classCredit[i];}
+        else if(classGrade[i] <= 93 && classRank[i] == 'R') {totalPointW += 3.7 * classCredit[i];}
+        else if(classGrade[i] <= 93 && classRank[i] == 'H') {totalPointW += 4.1 * classCredit[i];}
+        else if(classGrade[i] <= 93 && classRank[i] == 'A') {totalPointW += 4.7 * classCredit[i];}
+        else if(classGrade[i] <=100 && classRank[i] == 'R') {totalPointW += 4   * classCredit[i];}
+        else if(classGrade[i] <=100 && classRank[i] == 'H') {totalPointW += 4.5 * classCredit[i];}
+        else if(classGrade[i] <=100 && classRank[i] == 'A') {totalPointW += 5   * classCredit[i];}}
+
+    ugpa = totalPointU / creditSum;
+    wgpa = totalPointW / creditSum;
+
+    for(i = 0; i < numClass; i++){
+        if(classRank[i] == 'R') {classLevel[i] = "Regular";}
+        else if (classRank[i] == 'H') {classLevel[i] = "Honors";}
+        else if (classRank[i] == 'A') {classLevel[i] = "Advanced";}
+    }
+
+    fstream card;
+    string line;
+
+    card.open("Report.txt");
+    card << "----------------Here is your Report----------------\n";
+    card << "Name: " << name << endl;
+    card << "ID Number: " << uid << endl;
+    card << "***************************************************\n";
+
+    for(i = 0; i < numClass; i++){
+        card << className[i] << " (" << classLevel[i] << ")" << endl;
+        card << "Credit for " << className[i] << ": " << classCredit[i] << endl;
+        card << "Earned grade: " << classGrade[i] << "%\n";
+        card << "***************************************************\n";}
+
+    card << "Your Unweighted GPA is: " << fixed << setprecision(2) << ugpa << endl;
+    card << "Your Weighted GPA is: " << fixed << setprecision(2) << wgpa;
+    card.close();
+
+    cout << "\n---------------Your Report is Ready!---------------\n";
+    cout << "\n###################################################\n\n";
+
+    card.open("Report.txt");
+    while(!card.eof()){
+        getline(card, line);
+        string str;
+        card >> str;
+        cout << line << endl << str;}
+    card.close();
+}
+
+int main(){
+    Student s1;
+    cout << "----------Welcome to the Report Card Tool----------" << endl;
+    cout << "\nPlease enter Name and ID Number to get started.\n";
+    cout << "\nStudent Name: ";
+    getline(cin, s1.name);
+    cout << "ID Number: ";
+    cin >> s1.uid;
+    cout << endl;
+    s1.calculate();
+    cout << "\n!!!!!To reuse this tool, please clear the file used.!!!!!";
+    return 0;}
